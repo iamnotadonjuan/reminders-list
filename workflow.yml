@@ -1,0 +1,49 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Install dependencies
+      run: |
+        sudo yum update -y
+        sudo yum install -y curl
+        curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
+        sudo yum install -y nodejs
+        sudo npm install -g npm
+        sudo yum install -y gcc-c++ make
+        cd packages/backend
+        sudo npm install
+        
+    - name: Run linter and Prettier
+      run: |
+        cd packages/backend
+        npm run lint
+        npm run format:check
+        
+    - name: Run unit tests
+      run: |
+        cd packages/backend
+        npm run test:unit
+      
+    - name: Install pm2
+      run: |
+        cd packages/backend
+        sudo npm install -g pm2
+      
+    - name: Start the server
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        HOST: ${{ secrets.HOST }}
+      run: pm2 start ecosystem.config.js --env production
