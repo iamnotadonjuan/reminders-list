@@ -19,7 +19,6 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install -y nodejs
         sudo npm install -g npm
-        sudo apt-get install -y gcc-c++ make
         cd packages/backend
         sudo npm install
         
