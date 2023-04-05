@@ -46,4 +46,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         HOST: ${{ secrets.HOST }}
-      run: cd packages/backend && pm2 start dist/main --env production
+      run: cd packages/backend && pm2 start dist/main.js --env production
