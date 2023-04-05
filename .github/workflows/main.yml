@@ -31,7 +31,7 @@ jobs:
     - name: Run unit tests
       run: |
         cd packages/backend
-        npm run test:unit
+        npm run test
       
     - name: Install pm2
       run: sudo npm install -g pm2
