@@ -1,1 +1,31 @@
-node_modules/
+# Ignore built output directories
+/dist/
+/build/
+/out/
+/.next/
+/.vscode/
+
+# Ignore package lock files
+**/package-lock.json
+
+# Ignore TypeScript compilation artifacts
+**/*.js
+**/*.js.map
+**/*.d.ts
+
+# Ignore Nest.js development files
+packages/backend/node_modules/
+packages/backend/dist/
+packages/backend/coverage/
+packages/backend/logs/
+packages/backend/src/**/*.spec.ts
+packages/backend/src/**/*.test.ts
+
+# Ignore React.js development files
+packages/frontend/node_modules/
+packages/frontend/build/
+packages/frontend/coverage/
+packages/frontend/src/**/*.test.tsx
+packages/frontend/src/**/*.spec.tsx
+
+/node_modules
