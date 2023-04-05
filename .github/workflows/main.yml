@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: amazonlinux:latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
@@ -16,12 +16,12 @@ jobs:
       
     - name: Install dependencies
       run: |
-        sudo yum update -y
-        sudo yum install -y curl
+        sudo apt-get update -y
+        sudo apt-get install -y curl
         curl -sL https://rpm.nodesource.com/setup_14.x | sudo -E bash -
-        sudo yum install -y nodejs
+        sudo apt-get install -y nodejs
         sudo npm install -g npm
-        sudo yum install -y gcc-c++ make
+        sudo apt-get install -y gcc-c++ make
         cd packages/backend
         sudo npm install
         
