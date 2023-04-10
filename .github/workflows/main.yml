@@ -32,18 +32,23 @@ jobs:
       run: |
         cd packages/backend
         npm run test
-      
-    - name: Install pm2
-      run: sudo npm install -g pm2
 
     - name: Build application
       run: |
         cd packages/backend
         npm run build
-      
-    - name: Start the server
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        HOST: ${{ secrets.HOST }}
-      run: cd packages/backend && pm2 start dist/main.js --env production
+
+   - name: Copy code to EC2 instance
+      run: scp -i ${{ secrets.KEY_PATH }} -r packages/backend/dist ubuntu@${{ secrets.HOST }}:~/reminders-list
+
+    - name: SSH into EC2 instance and start application
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ubuntu
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd my-app
+          pm2 start dist/main.js --env production
+
