@@ -39,7 +39,7 @@ jobs:
         npm run build
 
     - name: Copy code to EC2 instance
-        run: scp -i ${{ secrets.KEY_PATH }} -r packages/backend/dist ubuntu@${{ secrets.HOST }}:~/reminders-list
+      run: scp -i ${{ secrets.KEY_PATH }} -r packages/backend/dist ubuntu@${{ secrets.HOST }}:~/reminders-list
 
     - name: SSH into EC2 instance and start application
       uses: appleboy/ssh-action@master
