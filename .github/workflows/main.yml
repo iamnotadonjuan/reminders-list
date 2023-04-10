@@ -19,18 +19,18 @@ jobs:
         sudo apt-get update -y
         sudo apt-get install -y nodejs
         sudo npm install -g npm
-        cd reminders-list/packages/backend
+        cd packages/backend
         sudo npm install
         
     - name: Run linter and Prettier
       run: |
-        cd reminders-list/packages/backend
+        cd packages/backend
         npm run lint
         npm run format:check
         
     - name: Run unit tests
       run: |
-        cd reminders-list/packages/backend
+        cd packages/backend
         npm run test
       
     - name: Install pm2
@@ -38,7 +38,7 @@ jobs:
 
     - name: Build application
       run: |
-        cd reminders-list/packages/backend
+        cd packages/backend
         npm run build
       
     - name: Start the server
@@ -46,4 +46,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         HOST: ${{ secrets.HOST }}
-      run: cd reminders-list/packages/backend && pm2 start dist/main.js --env production
+      run: cd packages/backend && pm2 start dist/main.js --env production
