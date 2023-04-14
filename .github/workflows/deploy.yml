@@ -30,7 +30,8 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
+          export PATH="$PATH:/home/ubuntu/.nvm/versions/node/v18.13.0/bin"
           cd ~/reminders-list/packages/backend
-          npm install --production
+          npm install
           npm run build
           pm2 start dist/main.js --env production
