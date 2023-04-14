@@ -9,11 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      
+
     - name: Install dependencies
       run: |
         sudo apt-get update -y
@@ -21,13 +20,13 @@ jobs:
         sudo npm install -g npm
         cd packages/backend
         sudo npm install
-        
+
     - name: Run linter and Prettier
       run: |
         cd packages/backend
         npm run lint
         npm run format:check
-        
+
     - name: Run unit tests
       run: |
         cd packages/backend
@@ -37,18 +36,3 @@ jobs:
       run: |
         cd packages/backend
         npm run build
-
-    - name: Copy code to EC2 instance
-      run: scp -i ${{ secrets.KEY_PATH }} -r packages/backend/dist ubuntu@${{ secrets.HOST }}:~/reminders-list
-
-    - name: SSH into EC2 instance and start application
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd my-app
-          pm2 start dist/main.js --env production
-
