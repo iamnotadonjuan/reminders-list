@@ -21,7 +21,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         target: ~/reminders-list/
-        source: packages/backend/dist/
+        source: packages/backend/
 
     - name: SSH into EC2 instance and start application
       uses: appleboy/ssh-action@master
@@ -30,7 +30,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
-          cd ~/reminders-list/packages/backend
+          cd ~/reminders-list
           npm install --production
           npm run build
           pm2 start dist/main.js --env production
