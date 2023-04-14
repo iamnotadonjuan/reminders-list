@@ -30,7 +30,7 @@ jobs:
         username: ubuntu
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
-          cd ~/reminders-list
+          cd ~/reminders-list/packages/backend
           npm install --production
           npm run build
           pm2 start dist/main.js --env production
